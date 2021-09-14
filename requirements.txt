@@ -1,0 +1,6 @@
+mecab-python3==0.996.5
+numpy==1.20.0
+sacrebleu==1.4.8
+sacremoses==0.0.43
+sentencepiece==0.1.91
+torch==1.5.0
