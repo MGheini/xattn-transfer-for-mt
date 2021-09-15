@@ -10,24 +10,24 @@ To view the data as we prepared and used it, switch to the `main` branch. But we
 ### Installations
 We worked in a conda environment with Python 3.8.
 
-* First install the requirements.  
-  ```
+* First install the requirements.
+  ```bash
     pip install requirements.txt
   ```
-* Then install Fairseq. To have the option to modify the package, install it in editable mode.  
-  ``` 
+* Then install Fairseq. To have the option to modify the package, install it in editable mode.
+  ```bash
     cd fairseq-modified
     pip install -e .
   ```
 * Finally, set the following environment variable.
-  ```
+  ```bash
     export FAIRSEQ=$PWD
     cd ..
   ```
 
 ### Experiments
 For the purpose of this walk-through, we assume we want to train a De–En model, using the following data:
-  ```
+  ```bash
   De-En
   ├── iwslt13.test.de
   ├── iwslt13.test.en
@@ -45,7 +45,7 @@ For the purpose of this walk-through, we assume we want to train a De–En model
 by transferring from a Fr–En parent model, the experiment files of which is stored under `FrEn/checkpoints`.
 
 * Start by making an experiment folder and preprocessing the data.
-  ```
+  ```bash
     mkdir test_exp
     ./xattn-transfer-for-mt/scripts/data_preprocessing/prepare_bi.sh \
         de en test_exp/ \
@@ -53,17 +53,17 @@ by transferring from a Fr–En parent model, the experiment files of which is st
         8000
   ```
   Please note that `prepare_bi.sh` is written for the most general case, where you are learning vocabulary for both the source and target sides. When necessary       modify it, and reuse whatever vocabulary you want. In this case, e.g., since we are transferring from Fr–En to De–En, we will reuse the target side vocabulary       from the parent. So `8000` refers to the source vocabulary size, and we need to copy parent target vocabulary instead of learning one _in the script_.
-  ```
+  ```bash
     cp ./FrEn/data/tgt.sentencepiece.bpe.model $DATA
     cp ./FrEn/data/tgt.sentencepiece.bpe.vocab $DATA
   ```
 * Now you can run an experiment. Here we want to just update the source embeddings and the cross-attention. So we run the corresponding script. Script names are       self-explanatory. Set the correct path to the desired parent model checkpoint _in the script_, and:
-  ```
+  ```bash
     bash ./xattn-transfer-for-mt/scripts/training/reinit-src-embeddings-and-finetune-parent-model-on-translation_src+xattn.sh \
         test_exp/ de en
   ```
 * Finally, after training, evaluate your model. Set the correct path to the detokenizer that you use _in the script_, and:
-  ```
+  ```bash
     bash ./xattn-transfer-for-mt/scripts/evaluation/decode_and_score_valid_and_test.sh \
         test_exp/ de en \
         $PWD/De-En/iwslt15.tune.en $PWD/De-En/iwslt13.test.en
@@ -78,7 +78,7 @@ The data preprocessing scripts are adopted from [FLORES](https://github.com/face
 To have mBART fit on the GPUs that we worked with memory-wise, we used the trimming solution provided [here](https://github.com/pytorch/fairseq/issues/2120#issuecomment-647429120).
 
 ## Citation
-```
+```bibtex
 @inproceedings{gheini-cross-attention,
   title={Cross-Attention is All You Need: Adapting Pretrained Transformers for Machine Translation},
   author={Gheini, Mozhdeh and Ren, Xiang and May, Jonathan},
