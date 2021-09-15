@@ -80,10 +80,10 @@ To have mBART fit on the GPUs that we worked with memory-wise, we used the trimm
 ## Citation
 ```bibtex
 @inproceedings{gheini-cross-attention,
-  title={Cross-Attention is All You Need: Adapting Pretrained Transformers for Machine Translation},
-  author={Gheini, Mozhdeh and Ren, Xiang and May, Jonathan},
-  booktitle={Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
-  year={2021},
-  month={November}
+  title = "Cross-Attention is All You Need: {A}dapting Pretrained {T}ransformers for Machine Translation",
+  author = "Gheini, Mozhdeh and Ren, Xiang and May, Jonathan",
+  booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+  month = nov,
+  year = "2021"
 }
 ```
